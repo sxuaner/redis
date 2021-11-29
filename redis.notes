@@ -1,0 +1,143 @@
+###Links:
+ https://aws.amazon.com/redis/
+
+
+###Redis features:
+
+high availability, 
+Lua scripting, 
+ transactions, 
+ on-disk persistence, 
+ and cluster support 
+ 
+ making it simpler to build real-time internet scale apps.
+
+
+###Concepts:
+data structures such as strings, hashes, lists, sets, sorted sets with range queries, bitmaps, hyperloglogs, geospatial indexes, and streams. 
+
+###Range Query:
+A range query is a common database operation that retrieves all records where some value is between an upper and lower boundary. 
+
+###Bitmaps:
+In computing, a bitmap is a mapping from some domain (for example, a range of integers) to bits. It is also called a #bit array# or #bitmap index#.
+
+### geospatial
+The word geospatial is used to indicate that data that has a geographic component to it. This means that the records in a dataset have locational information tied to 
+them such as geographic data in the form of coordinates, address, city, or ZIP code.
+
+### How does Redis work?
+All Redis data resides in-memory, in contrast to databases that store data on disk or SSDs. By eliminating the need to access disks, in-memory data stores such as Redis 
+avoid #seek time delays# and can access data in microseconds. Redis features versatile data structures, high availability, geospatial, Lua scripting, transactions, on-disk persistence, 
+and cluster support making it simpler to build real-time internet scale apps.
+
+### hyperloglog
+https://en.wikipedia.org/wiki/HyperLogLog
+?????????
+
+### Data processing
+Data processing has been revolutionized in recent years, and these changes present tremendous possibilities. For example, if we consider a variety of use cases — from the IoT and 
+Artificial Intelligence to user activity monitoring, fraud detection and FinTech — what do all of these cases have in common? They all collect and process high volumes of data, 
+which arrive at high velocities. After processing this data, these technologies then deliver them to all the appropriate consumers of data.
+
+### Message broker
+https://www.ibm.com/cloud/learn/message-brokers
+
+What is a message broker? also known as an #integration broker# or #interface engine#.
+
+A message broker is software that enables applications, systems, and services to communicate with each other and exchange information. The message broker does this by translating messages 
+between formal messaging protocols. This allows interdependent services to “talk” with one another directly, even if they were written in different languages or implemented on different platforms.
+
+-= interdependent =-  depending on each other. 
+ 
+Message brokers are software modules within messaging middleware or message-oriented middleware (MOM) solutions. This type of middleware provides developers with a standardized means of 
+handling the flow of data between an application’s components so that they can focus on its core logic. It can serve as a distributed communications layer that allows applications spanning
+ multiple platforms to communicate internally.
+
+# Link: An introduction to Redis data types and abstractions
+https://redis.io/topics/data-types-intro
+
+# Binary-safe keys
+Redis keys are binary safe, this means that you can use any binary sequence as a key, from a string like "foo" to the content of a JPEG file.
+!The empty string is also a valid key.
+!The maximum allowed key size is 512 MB. A value can't be bigger than 512 MB.
+!It's recommended to use hash function when the redis key is too long.
+
+# Hash Function
+The hash function translates the key associated with each datum or record into a hash code which is used to index the hash table.
+
+A cryptographic hash function (CHF) is a mathematical algorithm that maps data of #arbitrary size# (often called the "message") to #a bit array of a fixed size# (the "hash value", "hash", or 
+"message digest"). It is a one-way function.
+
+# Examples
+>  set mykey newval nx
+set a key value pair with the key name "mykey" and the value is newval when the key does not exist
+
+>  set mykey newval xx
+set a key value pair with the key name "mykey" and the value is newval when the key #does not# exist
+
+# INCR is atomic
+This means even multiple clients issuing INCR against the same key will never enter into a race condition. 
+
+# GETSET
+As per Redis 6.2, GETSET is considered deprecated. Please prefer SET with GET parameter in new code.
+! new approach: 
+// Atomic operation that returns the current value of a and sets it to <key value> given in the command.
+>  set <key name> <key value> get
+
+### To set or get multiple keys at a time and reduce latency: MSET MGET
+# MSET
+!MSET is atomic, so all given keys are set at once.  MSET always return OK since it can't fail
+
+# MGET
+Returns the values of all specified keys. For every key that does not hold a string value or does not exist, the special value nil is returned. Because of this, the operation never fails.
+[javascript]
+127.0.0.1:6379> mget key1 key2 key3
+1) "111"
+2) "222"
+3) "333"
+[end]
+
+# EXIST checks if a key exists in redis. 1 means yes and 0 means no.
+
+# DEL deletes a key(or keys) and associated value(s) in redis returning the number of keys removed. In following example, key4 does not exist.
+[javascript]
+127.0.0.1:6379> DEL key1 key2 key4
+(integer) 2
+[end]
+
+# TYPE shows the type of the value associated with a key.
+
+# Expiration time can be set both using seconds or milliseconds precision. although the resolution is 1 millisecond
+????Information about expires are replicated and persisted on disk, the time virtually passes when your Redis server remains stopped (this means that Redis saves the date at which a key will expire).
+Q: what info is persistet by redis on the disk
+
+[javascript]
+// to set a key and let it expire after some seconds
+> set mykey ex 5
+// TO set a key and let it expre after some miliseconds
+> set mykey px 5
+// To expire a key after seconds
+> expire mykey 5
+// To expire a key after miliseconds
+> pexpire mykey 5
+[end]
+
+# Persist a key and show the time left for a key to expire
+[javascript]
+// To remove the expiration time of a key
+> persist mykey
+// chech time to live.  The command returns -2 if the key does not exist.
+//                      The command returns -1 if the key exists but has no associated expire.
+> ttl mykey
+> pttl mykey
+
+127.0.0.1:6379> ttl mykey          
+(integer) -1                        // -1 means mykey lives forever
+127.0.0.1:6379> get mykey
+"1"
+127.0.0.1:6379> ttl kkk             // kkk does not exist
+(integer) -2
+[end]
+
+
