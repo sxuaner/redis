@@ -1,0 +1,54 @@
+
+description = 'Retwis-J'
+group = 'org.springframework.data'
+
+apply plugin: "java"
+apply plugin: 'eclipse'
+apply plugin: 'eclipse-wtp'
+apply plugin: 'idea'
+apply plugin: 'war'	
+
+group = 'org.springframework.data'
+version = "1.0.0"
+
+sourceCompatibility = 1.8
+archivesBaseName = "retwisj"
+
+
+repositories {
+	mavenCentral()
+//   maven { url "https://repo.spring.io/libs-snapshot" }
+//   maven { url "https://repo.spring.io/plugins-release" }
+}
+
+dependencies {
+	implementation 'org.slf4j:slf4j-api:1.7.32'
+	implementation "org.slf4j:jcl-over-slf4j:+"
+	testImplementation 'org.slf4j:slf4j-log4j12:1.7.32'
+	implementation 'log4j:log4j:1.2.17'
+	implementation "redis.clients:jedis:2.1.0:+"
+	implementation "org.codehaus.jackson:jackson-core-asl:+"
+	implementation "org.codehaus.jackson:jackson-mapper-asl:+"
+	implementation "javax.servlet:com.springsource.javax.servlet.jsp.jstl:1.2.0:+"
+	implementation ("org.springframework.data:spring-data-redis:+") {
+        exclude group: 'commons-logging'
+    }
+	implementation "org.springframework:spring-webmvc"
+	implementation "javax.inject:com.springsource.javax.inject:1.0.0"
+	compileOnly 'javax.servlet:com.springsource.javax.servlet:2.4.0'
+	compileOnly "javax.servlet:com.springsource.javax.servlet.jsp:2.1.0"
+	implementation "javax.servlet:com.springsource.javax.servlet.jsp.jstl:1.2.0"
+	implementation "org.apache.taglibs:com.springsource.org.apache.taglibs.standard:1.1.2"
+	testImplementation 'junit:junit:4.13.2'
+	// https://mvnrepository.com/artifact/org.springframework/spring-test
+	testImplementation 'org.springframework:spring-test:5.2.18.RELEASE'	
+	testImplementation 'org.mockito:mockito-all:1.10.19'
+}
+
+
+war {
+  archiveName = baseName + "." + extension
+}
+
+    
+defaultTasks 'build'

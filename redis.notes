@@ -1,17 +1,39 @@
+https://redis.io/topics/quickstart
+
 ###Links:
  https://aws.amazon.com/redis/
+ https://redis.io/topics/pipelining
+############## How to start the server ##############
+// To start the server
+$redis-server 
 
+// To connect to the server
+$ redis-cli
+
+// shuting down
+$ redis-cli shutdown
+
+// check redis version
+$redis-server --version
+$redis-cli info
+#################### Q&A #############
+// what is round  trip time?
+In telecommunications, round-trip delay or round-trip time is the amount of time it takes for a signal to be sent plus the amount of time it takes 
+for acknowledgement of that signal having been received. This time delay includes propagation times for the paths between the two communication endpoints
+
+! In redis context:
+Clients and Servers are connected via a network link. Such a link can be very fast (a loopback interface) or very slow (a connection established over 
+the Internet with many hops between the two hosts). Whatever the network latency is, it takes time for the packets to travel from the client to the 
+server, and back from the server to the client to carry the reply.
+This time is called RTT (Round Trip Time). 
 
 ###Redis features:
-
 high availability, 
 Lua scripting, 
- transactions, 
- on-disk persistence, 
- and cluster support 
- 
- making it simpler to build real-time internet scale apps.
-
+transactions, 
+on-disk persistence, 
+and cluster support 
+making it simpler to build real-time internet scale apps.
 
 ###Concepts:
 data structures such as strings, hashes, lists, sets, sorted sets with range queries, bitmaps, hyperloglogs, geospatial indexes, and streams. 
@@ -45,8 +67,9 @@ https://www.ibm.com/cloud/learn/message-brokers
 
 What is a message broker? also known as an #integration broker# or #interface engine#.
 
-A message broker is software that enables applications, systems, and services to communicate with each other and exchange information. The message broker does this by translating messages 
-between formal messaging protocols. This allows interdependent services to “talk” with one another directly, even if they were written in different languages or implemented on different platforms.
+A message broker is software that enables applications, systems, and services to communicate with each other and exchange information. The message 
+broker does this by translating messages between formal messaging protocols. This allows interdependent services to “talk” with one another directly, 
+even if they were written in different languages or implemented on different platforms.
 
 -= interdependent =-  depending on each other. 
  
@@ -69,12 +92,14 @@ The hash function translates the key associated with each datum or record into a
 A cryptographic hash function (CHF) is a mathematical algorithm that maps data of #arbitrary size# (often called the "message") to #a bit array of a fixed size# (the "hash value", "hash", or 
 "message digest"). It is a one-way function.
 
+############################################# Commnands #############################################
 # Examples
 >  set mykey newval nx
 set a key value pair with the key name "mykey" and the value is newval when the key does not exist
 
 >  set mykey newval xx
 set a key value pair with the key name "mykey" and the value is newval when the key #does not# exist
+
 
 # INCR is atomic
 This means even multiple clients issuing INCR against the same key will never enter into a race condition. 
@@ -139,5 +164,7 @@ Q: what info is persistet by redis on the disk
 127.0.0.1:6379> ttl kkk             // kkk does not exist
 (integer) -2
 [end]
+
+# KEYS
 
 
